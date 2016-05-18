@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div(class="container")
+    h1= title
+    form(class="lead",action="#", method="POST")
+      label(name="NIM") NIM
+      br
+      input(name="NIM",type="text")
+
