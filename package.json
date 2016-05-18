@@ -1,0 +1,19 @@
+{
+  "name": "websparta2016",
+  "version": "1.0.0",
+  "description": "Web SPARTA 2016",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmxhaha/SPARTAWeb2016.git"
+  },
+  "author": "rmxhaha",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/rmxhaha/SPARTAWeb2016/issues"
+  },
+  "homepage": "https://github.com/rmxhaha/SPARTAWeb2016#readme"
+}
