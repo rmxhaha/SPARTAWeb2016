@@ -15,8 +15,8 @@ block content
           td nama
        each tugas in list_tugas
          tr
-           td= tugas[0] 
-           td= tugas[1] 
+           td= tugas.id
+           td= tugas.nama_tugas 
            td
-              a(href="./delete?id="+tugas[0]) delete
+              a(href="./delete?id="+tugas.id) delete
 
