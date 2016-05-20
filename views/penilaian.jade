@@ -3,9 +3,12 @@ extends layout
 block content
   div(class="container")
     h1= title
-    div(class="NIM")= NIM
-    div(class="nama")= nama
-    table(class="nilai")
+    h1= NIM
+    h1= nama
+    table(class="table")
+      tr
+        td tugas
+        td selesai
       each p in penilaian
        tr
          td= p[0]
