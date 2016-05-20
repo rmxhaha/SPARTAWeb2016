@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  div(class="container")
+    h1= title
+    div(class="NIM")= NIM
+    div(class="nama")= nama
+    table(class="nilai")
+      each p in penilaian
+       tr
+         td= p[0]
+         td= p[1]
+
