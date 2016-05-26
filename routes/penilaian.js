@@ -25,7 +25,7 @@ router.get('/:nim', function(req, res, next) {
      console.log( data );
      res.render('penilaian', data );
   });
-//  res.render('penilaian', { nama: 'Candra Ramsi', NIM : '13514090', penilaian : [["Tugas #1",1]] });
+  
 });
 
 module.exports = router;
