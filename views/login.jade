@@ -3,5 +3,6 @@ extends layout
 block content
   div(class="container")
     form(action=".")
-      input(placeholder="NIM", name="nim")
-      input(placeholder="password", type="password", name="password")
+      input.form-control(placeholder="NIM", name="nim")
+      input.form-control(placeholder="password", type="password", name="password")
+      input.form-control(type="submit",value="Login")
