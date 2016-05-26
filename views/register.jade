@@ -1,0 +1,80 @@
+extends layout
+
+block content
+  .container
+    h1 Form Registrasi
+    form(action=".",method="POST")
+      .form-group
+        label(for="nim") NIM TPB
+        input.form-control(placeholder="NIM TPB",name="nim")
+      .form-group
+        label(for="fullname") Nama lengkap
+        input.form-control(placeholder="",name="fullname")
+      .form-group
+        label(for="shortname") Nama panggilan
+        input.form-control(placeholder="",name="shortname")
+      .form-group
+        label(for="department") Jurusan 
+        select.form-control(name="department")
+          option(value="sti") STI
+          option(value="if") IF
+      .form-group
+        label(for="placeborn") Tempat Lahir
+        input.form-control(name="placeborn")
+      .form-group  
+        label(for="dateborn") Tanggal lahir (DD-MM-YYYY)
+        input.form-control(name="dateborn")
+      .form-group
+        label(for="LINEID") ID Line
+        input.form-control(name="LINEID")
+      .form-group
+        label(for="origin") Asal Daerah
+        input.form-control(name="origin")
+      .form-group
+        label(for="originaddress") Alamat Asal
+        textarea.form-control(name="originaddress")
+      .form-group
+        label(for="bandungaddress") Alamat di Bandung
+        input.form-control(name="bandungaddress")
+      .form-group
+        label(for="email") Alamat Email
+        input.form-control(name="email")
+      .form-group 
+        label(for="handphone1") Nomor HP 1
+        input.form-control(name="handphone1")
+      .form-group 
+        label(for="handphone2") Nomor HP 2
+        input.form-control(name="handphone2", placeholder="-")
+      .form-group
+        label(for="guardianname") Nama Ortu/wali
+        input.form-control(name="guardianname")
+      .form-group
+        label(for="guardianphone") No Telp Ortu/wali
+        input.form-control(name="guardianphone",placeholder="nomor yang bisa dihubungi kalau keadaan darurat")
+      .form-group
+        label(for="religion") Agama
+        select.form-control(name="religion")
+          option(value="buddha") Buddha
+          option(value="kristen") Kristen
+          option(value="katolik") Katolik
+          option(value="islam",selected) Islam
+          option(value="hindu") Hindu
+          option(value="others") Lain-lain
+      .form-group
+        label(for="illness") Penyakit
+        textarea.form-control(name="illness") -
+      .form-group
+        label(for="bloodtype") Golongan darah
+        select.form-control(name="bloodtype")
+          option(value="0") O
+          option(value="A") A
+          option(value="B") B
+          option(value="AB") AB
+      .form-group
+        label(for="mbti") MBTI Test Result
+        input.form-control(name="mbti",placeholder="ex. ENFJ")
+      .form-group
+        label(for="outsideactivity") Keaktifan di luar HMIF 
+        textarea.form-control(name="outsideactivity")
+        .alert.alert-info cth: unit atau kegiatan di luar kampus
+      input.form-control(type="submit")
