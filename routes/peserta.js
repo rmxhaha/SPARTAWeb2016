@@ -8,7 +8,7 @@ var crypto = require('crypto');
 function checkAuth(req, res, next) {
   if (!req.session.user_data) {
     console.log( req.session );
-    res.redirect('../login');
+    res.redirect('./login');
   } else {
     // prevent cache
     res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -57,11 +57,10 @@ router.post('/login', function(req,res,next){
       
   mysql.createConnection(dbconf)
   .then( function(conn){
-    return conn.query("SELECT COUNT(*) as count FROM peserta WHERE nim=? AND password=?", [nim,hpass]);
+    return conn.query("SELECT * FROM peserta WHERE nim=? AND password=?", [nim,hpass]);
   })
   .then(function(result){
-    console.log( result );
-    if( result[0].count == 1 )
+    if( result.length == 1 )
     {
       // do login session setup
       req.session.user_data = result[0];
@@ -75,7 +74,30 @@ router.post('/login', function(req,res,next){
 });
 
 router.get('/profile', checkAuth, function(req,res,next){
-  res.send("profile :D");
+  console.log( req.session.user_data );
+  
+  mysql.createConnection(dbconf)
+  .then(function(conn){
+    return Promise.join( 
+      conn.query("SELECT NIM, fullname FROM peserta WHERE NIM=?", [req.session.user_data.NIM] ), 
+      conn.query("SELECT tugas.nama_tugas, (SELECT COUNT(*) FROM penilaian WHERE NIM=? AND penilaian.id=tugas.id) as selesai FROM tugas", 
+                  [req.session.user_data.NIM]) 
+    );
+  })
+  .then(function(results){
+     var userdata = results[0];
+     var scoredata = results[1];
+     var data = {};
+
+     data.fullname = userdata[0].fullname;
+     data.NIM = userdata[0].NIM;
+     data.tasks = scoredata;
+     data.days = [
+      { name : "Day #1", attendance : 1 }
+     ];
+     
+     res.render('profile', data );
+  });
 });
 
 module.exports = router;

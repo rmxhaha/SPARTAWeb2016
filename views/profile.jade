@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .container
+    h1= fullname
+    h3= NIM
+    table.table
+      tr
+        td Tugas
+        td Selesai
+      each task in tasks
+        tr
+          td= task.nama_tugas
+          td= task.selesai
+    table.table
+      tr
+        td Day
+        td Kehadiran
+      each day in days
+        tr
+          td= day.name
+          td= day.attendance
