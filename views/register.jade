@@ -5,8 +5,11 @@ block content
     h1 Form Registrasi
     form(action=".",method="POST")
       .form-group
-        label(for="nim") NIM TPB
-        input.form-control(placeholder="NIM TPB",name="nim")
+        label(for="NIM") NIM TPB
+        input.form-control(placeholder="NIM TPB",name="NIM")      
+      .form-group
+        label(for="password") Password
+        input.form-control(type="password",name="password")
       .form-group
         label(for="fullname") Nama lengkap
         input.form-control(placeholder="",name="fullname")
