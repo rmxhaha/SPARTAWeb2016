@@ -5,6 +5,16 @@ var mysql = require('promise-mysql');
 var Promise = require('bluebird');
 
 /* GET users listing. */
+router.get('/', function(req,res,next){
+  mysql.createConnection(dbconf)
+  .then(function(conn){
+    return conn.query("SELECT NIM, fullname, (SELECT COUNT(*) FROM penilaian WHERE penilaian.NIM = peserta.NIM ) as score FROM peserta");
+  })
+  .then(function(result){
+    res.render('menilai_list_peserta', { list : result });
+  });
+});
+
 router.get('/peserta/:nim', function(req, res, next) {
 
   mysql.createConnection(dbconf)
