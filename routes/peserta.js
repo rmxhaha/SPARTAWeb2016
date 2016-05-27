@@ -14,7 +14,6 @@ function checkAuth(req, res, next) {
     res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
   }
-  return next();
 }
 
 router.get('/register', function(req,res,next){
@@ -22,7 +21,25 @@ router.get('/register', function(req,res,next){
 });
 
 router.post('/register', function(req,res,next){
+  // check data
+  
   // deal with register 
+
+  // hashing the password
+  req.body.password = crypto
+      .createHash("sha256","goodluck")
+      .update(req.body.password)
+      .digest('hex');
+  
+  console.log( req.body );
+  
+  mysql.createConnection(dbconf)
+  .then(function(conn){
+    return conn.query("INSERT INTO peserta SET ?", req.body);
+  })
+  .finally(function(){
+    res.redirect('./login');
+  })
 });
 
 /* GET users listing. */
@@ -37,28 +54,24 @@ router.post('/login', function(req,res,next){
       .createHash("sha256","goodluck")
       .update(password)
       .digest('hex');
-
-  if( req.body.nim == "13514090" ){
-    console.log("R");
-    req.session.user_data = { nim : "13514090", name : "Candra Ramsi" };
-    console.log( req.session );
-    res.redirect("../profile/");
-  }
       
   mysql.createConnection(dbconf)
   .then( function(conn){
-    return conn.query("SELECT COUNT(*) as count FROM nim=? AND password=?", [nim,hpass]);
+    return conn.query("SELECT COUNT(*) as count FROM peserta WHERE nim=? AND password=?", [nim,hpass]);
   })
   .then(function(result){
-    if( result[0].count == 0 )
+    console.log( result );
+    if( result[0].count == 1 )
     {
       // do login session setup
+      req.session.user_data = result[0];
+      res.redirect("./profile");
     }
     else {
       // reject login
+      res.redirect("./login");
     }
   });
-  return next();
 });
 
 router.get('/profile', checkAuth, function(req,res,next){
