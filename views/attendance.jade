@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  div(class="container")
+    h1= dayid
+    h2= dayname
+    table.table
+      tr
+        td NIM
+        td kehadiran
+      each p in attendance
+       tr
+         td= p.NIM
+         td= p.hadir
+         td
+           a(href="./attendance/toggle?nim="+p.NIM+"&id="+dayid) toggle
+

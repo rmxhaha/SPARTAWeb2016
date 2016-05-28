@@ -3,8 +3,8 @@ extends layout
 block content
    body
     script(src="/javascripts/days/form.js")
-    div(class="container")
-     h1 Tambahkan Tugas
+    .container
+     h1 Tambahkan Day
      form(action="./submit",method="POST")
        .form-group
          label(for="nama") Nama 
@@ -17,16 +17,17 @@ block content
      .alert.alert-warning Edit is not available
      h1 List Days
      .alert.alert-warning Delete will also delete attendance
-     table(class="table")
+     table.table
        tr
           td id
           td nama
           td tanggal
-       each tugas in list_days
+       each day in list_days
          tr
-           td= tugas.id
-           td= tugas.name
-           td= tugas.date
+           td= day.id
+           td= day.name
+           td= day.date
            td
-              a(href="./delete?id="+tugas.id) delete
+              a(href="./delete?id="+day.id) delete
+              a(href="./attendance?id="+day.id) edit attendance
 
