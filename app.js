@@ -8,7 +8,6 @@ var session = require('express-session')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var penilaian = require('./routes/penilaian');
 var tugas = require('./routes/tugas');
 var menilai = require('./routes/menilai');
 var peserta = require('./routes/peserta');
@@ -36,7 +35,6 @@ app.use('/bower_components',  express.static(path.join(__dirname, '/bower_compon
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/penilaian', penilaian );
 app.use('/tugas', tugas);
 app.use('/menilai', menilai );
 app.use('/peserta', peserta );
