@@ -1,0 +1,32 @@
+extends layout
+
+block content
+   body
+    script(src="/javascripts/days/form.js")
+    div(class="container")
+     h1 Tambahkan Tugas
+     form(action="./submit",method="POST")
+       .form-group
+         label(for="nama") Nama 
+         input.form-control(type="text",name="name", placeholder="ex. Day Zero")
+       .form-group
+          label(for="date") Tanggal
+          input.form-control#daydate(type="text",name="date")
+       .form-group
+          input.form-control(type="submit")
+     .alert.alert-warning Edit is not available
+     h1 List Days
+     .alert.alert-warning Delete will also delete attendance
+     table(class="table")
+       tr
+          td id
+          td nama
+          td tanggal
+       each tugas in list_days
+         tr
+           td= tugas.id
+           td= tugas.name
+           td= tugas.date
+           td
+              a(href="./delete?id="+tugas.id) delete
+

@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var tugas = require('./routes/tugas');
 var menilai = require('./routes/menilai');
 var peserta = require('./routes/peserta');
+var days = require('./routes/days');
 
 var app = express();
 
@@ -38,6 +39,7 @@ app.use('/users', users);
 app.use('/tugas', tugas);
 app.use('/menilai', menilai );
 app.use('/peserta', peserta );
+app.use('/days', days );
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
