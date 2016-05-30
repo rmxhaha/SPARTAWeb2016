@@ -9,54 +9,54 @@ block content
     form(action=".",method="POST")
       .form-group
         label(for="NIM") NIM TPB
-        input.form-control(placeholder="NIM TPB",name="NIM")      
+        input.form-control(placeholder="NIM TPB",name="NIM",required,minlength=8,maxlength=8,pattern="^[0-9]{8}$")      
       .form-group
         label(for="password") Password
-        input.form-control(type="password",name="password")
+        input.form-control(type="password",name="password",required)
       .form-group
         label(for="fullname") Nama lengkap
-        input.form-control(placeholder="",name="fullname")
+        input.form-control(placeholder="",name="fullname",required)
       .form-group
         label(for="shortname") Nama panggilan
-        input.form-control(placeholder="",name="shortname")
+        input.form-control(placeholder="",name="shortname",required)
       .form-group
         label(for="department") Jurusan 
-        select.form-control(name="department")
+        select.form-control(name="department",required)
           option(value="sti") STI
           option(value="if") IF
       .form-group
         label(for="placeborn") Tempat Lahir
-        input.form-control(name="placeborn")
+        input.form-control(name="placeborn",required)
       .form-group  
         label(for="dateborn") Tanggal lahir 
-        input.form-control#dateborn(name="dateborn",placeholder="YYYY-MM-DD")
+        input.form-control#dateborn(name="dateborn",placeholder="YYYY-MM-DD",required)
       .form-group
         label(for="LINEID") ID Line
-        input.form-control(name="LINEID")
+        input.form-control(name="LINEID",required)
       .form-group
         label(for="origin") Asal Daerah
-        input.form-control(name="origin")
+        input.form-control(name="origin",required)
       .form-group
         label(for="originaddress") Alamat Asal
-        textarea.form-control(name="originaddress")
+        textarea.form-control(name="originaddress",required)
       .form-group
         label(for="bandungaddress") Alamat di Bandung
-        input.form-control(name="bandungaddress")
+        input.form-control(name="bandungaddress",required)
       .form-group
         label(for="email") Alamat Email
-        input.form-control(name="email")
+        input.form-control(name="email",type="email",required)
       .form-group 
         label(for="handphone1") Nomor HP 1
-        input.form-control(name="handphone1")
+        input.form-control(name="handphone1",pattern="^[0-9]{6,15}$",required)
       .form-group 
         label(for="handphone2") Nomor HP 2
-        input.form-control(name="handphone2", placeholder="-")
+        input.form-control(name="handphone2",pattern="^[0-9]{6,15}$", placeholder="-")
       .form-group
         label(for="guardianname") Nama Ortu/wali
-        input.form-control(name="guardianname")
+        input.form-control(name="guardianname",required)
       .form-group
         label(for="guardianphone") No Telp Ortu/wali
-        input.form-control(name="guardianphone",placeholder="nomor yang bisa dihubungi kalau keadaan darurat")
+        input.form-control(name="guardianphone",pattern="^[0-9]{6,15}$",placeholder="nomor yang bisa dihubungi kalau keadaan darurat",required)
       .form-group
         label(for="religion") Agama
         select.form-control(name="religion")
@@ -68,7 +68,7 @@ block content
           option(value="others") Lain-lain
       .form-group
         label(for="illness") Penyakit
-        textarea.form-control(name="illness") -
+        textarea.form-control(name="illness",required) -
       .form-group
         label(for="bloodtype") Golongan darah
         select.form-control(name="bloodtype")
@@ -78,9 +78,9 @@ block content
           option(value="AB") AB
       .form-group
         label(for="mbti") MBTI Test Result
-        input.form-control(name="mbti",placeholder="ex. ENFJ")
+        input.form-control(name="mbti",placeholder="ex. ENFJ",required)
       .form-group
-        label(for="outsideactivity") Keaktifan di luar HMIF 
-        textarea.form-control(name="outsideactivity")
+        label(for="outsideactivity",required) Keaktifan di luar HMIF 
+        textarea.form-control(name="outsideactivity",value="-")
         .alert.alert-info cth: unit atau kegiatan di luar kampus
       input.form-control(type="submit")
