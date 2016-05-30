@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2016 at 10:42 AM
+-- Generation Time: May 30, 2016 at 12:51 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -23,6 +23,48 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `day`
+--
+
+CREATE TABLE IF NOT EXISTS `day` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `day`
+--
+
+INSERT INTO `day` (`id`, `name`, `date`) VALUES
+(1, 'Day Zero', '2016-05-31'),
+(2, 'Day One', '2016-05-31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kehadiran`
+--
+
+CREATE TABLE IF NOT EXISTS `kehadiran` (
+  `day_id` int(11) NOT NULL,
+  `NIM` char(8) NOT NULL,
+  PRIMARY KEY (`day_id`,`NIM`),
+  KEY `NIM` (`NIM`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kehadiran`
+--
+
+INSERT INTO `kehadiran` (`day_id`, `NIM`) VALUES
+(1, '13514090'),
+(2, '13514090');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `penilaian`
 --
 
@@ -38,7 +80,8 @@ CREATE TABLE IF NOT EXISTS `penilaian` (
 --
 
 INSERT INTO `penilaian` (`id`, `NIM`) VALUES
-(1, '13514090');
+(1, '13514090'),
+(1, '13514999');
 
 -- --------------------------------------------------------
 
@@ -102,6 +145,13 @@ INSERT INTO `tugas` (`id`, `nama_tugas`) VALUES
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `kehadiran`
+--
+ALTER TABLE `kehadiran`
+  ADD CONSTRAINT `kehadiran_ibfk_2` FOREIGN KEY (`NIM`) REFERENCES `peserta` (`NIM`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `kehadiran_ibfk_1` FOREIGN KEY (`day_id`) REFERENCES `day` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `penilaian`
