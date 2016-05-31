@@ -4,7 +4,7 @@ block content
    body
     div(class="container")
      h1 Tambahkan Tugas
-     form(action="./submit",method="POST")
+     form(action="./submit/",method="POST")
        label(name="nama")
        input(type="text",name="nama")
        input(type="submit")
@@ -18,5 +18,5 @@ block content
            td= tugas.id
            td= tugas.nama_tugas 
            td
-              a(href="./delete?id="+tugas.id) delete
+              a(href="./delete/?id="+tugas.id) delete
 

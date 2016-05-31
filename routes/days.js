@@ -29,6 +29,7 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/submit', function(req, res, next){
+  var backURL = req.header("Referer");
   if( !req.body.name || !req.body.date )
     return res.redirect("./");
   var c = mysql.createConnection(dbconf);
@@ -38,79 +39,31 @@ router.post('/submit', function(req, res, next){
      conn.query( query, [req.body.name, req.body.date]);
   })
   .finally(function(){
-     res.redirect("./");
+     res.redirect(backURL);
   });
 });
 
-router.get('/submit', function(req,res){ res.redirect('./')});
+router.get('/submit/', function(req,res){
+  var backURL = req.header("Referer");
+  res.redirect(backURL);
+});
 
-router.get('/delete', function(req,res){
+router.get('/delete/', function(req,res){
+  var backURL = req.header("Referer");
   var c = mysql.createConnection(dbconf);
   if( !req.query.id || req.query.id.length > 5 ) return res.redirect("./");
   
   c.then( function(conn){
-       conn.query("DELETE FROM day WHERE id=?", [req.query.id]);
+    conn.query("DELETE FROM day WHERE id=?", [req.query.id]);
   })
-  .finally(function(){
-    res.redirect("./");
-  });
-  
-});
-
-router.get('/attendance/toggle', function(req, res, next) {
-  var dayid = req.query.id;
-  var nim = req.query.nim;
-  var backURL = req.header("Referer");
-  
-  if( !dayid || dayid.length > 5 || !nim || nim.length != 8 )
-    return res.redirect(backURL);
-  
-  var c = mysql.createConnection(dbconf);
-  c.then(function(conn){
-    return conn.query("DELETE FROM kehadiran WHERE NIM=? AND day_id=?",[nim,dayid]);
+  .catch(function(err){
+    res.render('error',err);
   })
-  .then(function(result){
-    if( result.affectedRows != 0 )
-      return res.redirect(backURL);
-
-    return c.then(function(conn){ 
-      return conn.query("INSERT INTO kehadiran (`NIM`,`day_id`) VALUES (?,?)",[nim,dayid]); 
-    });
-  })
-  .finally(function(){
+  .then(function(){
     res.redirect(backURL);
-  })
-  
+  });
 });
 
-router.get('/attendance', function(req, res, next) {
-  if( !req.query.id )
-    return res.redirect("./");
-  
-   var c = mysql.createConnection(dbconf);
-   c.then( function(conn){
-      return Promise.join( 
-        conn.query("SELECT NIM, (SELECT COUNT(*) FROM kehadiran WHERE kehadiran.NIM = peserta.NIM AND day_id=?) as hadir FROM peserta ORDER BY NIM", [req.query.id]),
-        conn.query("SELECT name FROM day WHERE id=?", [req.query.id])
-      );
-   })
-   .then(function( result ){
-     if( result[1].length == 0 ) throw new Error("Day doesn't exist");
-
-     var rows = result[0];
-     var dayname = result[1][0].name;
-     
-     res.render("attendance", { 
-      dayname : dayname,
-      dayid : req.query.id,
-      attendance : rows 
-     });
-   })
-   .catch(function(err){
-      console.log(err);
-      res.redirect("/");
-   });
-});
 
 module.exports = router;
 

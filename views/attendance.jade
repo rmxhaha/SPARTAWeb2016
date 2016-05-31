@@ -2,6 +2,8 @@ extends layout
 
 block content
   div(class="container")
+    h2
+      a(href="../days/") back
     h1= dayid
     h2= dayname
     table.table
@@ -13,5 +15,5 @@ block content
          td= p.NIM
          td= p.hadir
          td
-           a(href="./attendance/toggle?nim="+p.NIM+"&id="+dayid) toggle
+           a(href="./toggle/?nim="+p.NIM+"&id="+dayid) toggle
 

@@ -6,12 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session')
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
 var tugas = require('./routes/tugas');
 var menilai = require('./routes/menilai');
 var peserta = require('./routes/peserta');
 var days = require('./routes/days');
+var attendance = require('./routes/attendance');
 
 var app = express();
 
@@ -34,12 +33,12 @@ app.use(session({
 
 app.use('/bower_components',  express.static(path.join(__dirname, '/bower_components')));
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/tugas', tugas);
-app.use('/menilai', menilai );
-app.use('/peserta', peserta );
-app.use('/days', days );
+app.use('/', peserta);
+app.use('/admin/', function(req,res,next){ res.render("admin"); });
+app.use('/admin/tugas', tugas);
+app.use('/admin/menilai', menilai );
+app.use('/admin/days', days );
+app.use('/admin/attendance', attendance );
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

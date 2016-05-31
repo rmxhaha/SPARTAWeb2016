@@ -16,11 +16,11 @@ function checkAuth(req, res, next) {
   }
 }
 
-router.get('/register', function(req,res,next){
+router.get('/register/', function(req,res,next){
   res.render('register');
 });
 
-router.post('/register', function(req,res,next){
+router.post('/register/', function(req,res,next){
   // check data
   
   // deal with register 
@@ -38,16 +38,16 @@ router.post('/register', function(req,res,next){
     return conn.query("INSERT INTO peserta SET ?", req.body);
   })
   .finally(function(){
-    res.redirect('./login');
+    res.redirect('../login');
   })
 });
 
 /* GET users listing. */
-router.get('/login', function(req, res, next) {
+router.get('/login/', function(req, res, next) {
   res.render('login');
 });
 
-router.post('/login', function(req,res,next){
+router.post('/login/', function(req,res,next){
   var nim = req.body.nim;
   var password = req.body.password;
   var hpass = crypto
@@ -64,16 +64,16 @@ router.post('/login', function(req,res,next){
     {
       // do login session setup
       req.session.user_data = result[0];
-      res.redirect("./profile");
+      res.redirect("../profile");
     }
     else {
       // reject login
-      res.redirect("./login");
+      res.redirect("../login");
     }
   });
 });
 
-router.get('/profile', checkAuth, function(req,res,next){
+router.get('/profile/', checkAuth, function(req,res,next){
   console.log( req.session.user_data );
   
   mysql.createConnection(dbconf)
