@@ -36,6 +36,8 @@ router.post('/register/', function(req,res,next){
       .digest('hex');
   
   console.log( req.body );
+  if( req.body.handphone2 == "" ) req.body.handphone2 = null;
+  if( req.body.outsideactivity = "" ) req.body.outsideactivity = "-";
   
   mysql.createConnection(dbconf)
   .then(function(conn){
