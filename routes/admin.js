@@ -5,8 +5,10 @@ var dbconf = require('../conf/db');
 var mysql = require('promise-mysql');
 var Promise = require('bluebird');
 
-var tugas = require('./tugas');
+var list_peserta = require('./list_peserta');
+var data_peserta = require('./data_peserta');
 var menilai = require('./menilai');
+var tugas = require('./tugas');
 var days = require('./days');
 var attendance = require('./attendance');
 
@@ -21,6 +23,8 @@ function checkAdminAuth(req, res, next) {
 }
 
 router.use('/tugas', checkAdminAuth, tugas);
+router.use('/list_peserta',checkAdminAuth,  list_peserta );
+router.use('/data',checkAdminAuth,  data_peserta );
 router.use('/menilai',checkAdminAuth,  menilai );
 router.use('/days',checkAdminAuth,  days );
 router.use('/attendance',checkAdminAuth,  attendance );

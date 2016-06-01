@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  a(href="../../list_peserta/") Back
+  table.table
+    each val,index in data_peserta
+      tr
+        td= index
+        td= val
