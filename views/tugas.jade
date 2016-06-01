@@ -5,7 +5,7 @@ block content
    h1 Tambahkan Tugas
    form(action="./submit/",method="POST")
      label(name="nama")
-     input(type="text",name="nama")
+     input(type="text",name="nama",maxlength=200)
      input(type="submit")
    h1 List Tugas
    table(class="table")
