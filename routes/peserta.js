@@ -16,6 +16,10 @@ function checkAuth(req, res, next) {
   }
 }
 
+router.get('/', function(req,res,next){
+  res.redirect("/login/");
+});
+
 router.get('/register/', function(req,res,next){
   res.render('register');
 });
