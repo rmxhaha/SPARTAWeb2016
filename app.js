@@ -34,11 +34,11 @@ app.use(session({
 app.use('/bower_components',  express.static(path.join(__dirname, '/bower_components')));
 
 app.use('/', peserta);
-app.use('/admin/', function(req,res,next){ res.render("admin"); });
 app.use('/admin/tugas', tugas);
 app.use('/admin/menilai', menilai );
 app.use('/admin/days', days );
 app.use('/admin/attendance', attendance );
+app.get('/admin/', function(req,res,next){ res.render("admin"); });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
