@@ -1,34 +1,33 @@
 extends layout
+block script
+  script(src="/javascripts/days/form.js")
 
 block content
-   body
-    script(src="/javascripts/days/form.js")
-    .container
-     h1 Tambahkan Day
-     form(action="./submit/",method="POST")
-       .form-group
-         label(for="nama") Nama 
-         input.form-control(type="text",name="name", placeholder="ex. Day Zero")
-       .form-group
-          label(for="date") Tanggal
-          input.form-control#daydate(type="text",name="date")
-       .form-group
-          input.form-control(type="submit")
-     .alert.alert-warning Edit is not available
-     h1 List Days
-     .alert.alert-warning Delete will also delete attendance
-     table.table
-       tr
-          td id
-          td nama
-          td tanggal
-       each day in list_days
-         tr
-           td= day.id
-           td= day.name
-           td= day.date
-           td
-              a(href="./delete/?id="+day.id) delete
-              span 
-              a(href="../attendance/?id="+day.id) edit attendance
-
+ a(href="../") Back
+ h1 Tambahkan Day
+ form(action="./submit/",method="POST")
+   .form-group
+     label(for="nama") Nama 
+     input.form-control(type="text",name="name", placeholder="ex. Day Zero")
+   .form-group
+      label(for="date") Tanggal
+      input.form-control#daydate(type="text",name="date")
+   .form-group
+      input.form-control(type="submit")
+ .alert.alert-warning Edit is not available
+ h1 List Days
+ .alert.alert-warning Delete will also delete attendance
+ table.table
+   tr
+      td id
+      td nama
+      td tanggal
+   each day in list_days
+     tr
+       td= day.id
+       td= day.name
+       td= day.date
+       td
+          a(href="./delete/?id="+day.id) delete
+          span 
+          a(href="../attendance/?id="+day.id) edit attendance

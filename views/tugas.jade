@@ -1,22 +1,21 @@
 extends layout
 
 block content
-   body
-    div(class="container")
-     h1 Tambahkan Tugas
-     form(action="./submit/",method="POST")
-       label(name="nama")
-       input(type="text",name="nama")
-       input(type="submit")
-     h1 List Tugas
-     table(class="table")
+   a(href="../") Back
+   h1 Tambahkan Tugas
+   form(action="./submit/",method="POST")
+     label(name="nama")
+     input(type="text",name="nama")
+     input(type="submit")
+   h1 List Tugas
+   table(class="table")
+     tr
+        td id
+        td nama
+     each tugas in list_tugas
        tr
-          td id
-          td nama
-       each tugas in list_tugas
-         tr
-           td= tugas.id
-           td= tugas.nama_tugas 
-           td
-              a(href="./delete/?id="+tugas.id) delete
+         td= tugas.id
+         td= tugas.nama_tugas 
+         td
+            a(href="./delete/?id="+tugas.id) delete
 

@@ -1,16 +1,16 @@
 extends layout
 
 block content
-  div.container
-    table.table
+  a(href="../") back
+  table.table
+    tr
+      td NIM
+      td Nama
+      td Score
+    each peserta in list
       tr
-        td NIM
-        td Nama
-        td Score
-      each peserta in list
-        tr
-          td= peserta.NIM
-          td= peserta.fullname
-          td= peserta.score
-          td
-            a(href="./peserta/" + peserta.NIM + "/") Edit
+        td= peserta.NIM
+        td= peserta.fullname
+        td= peserta.score
+        td
+          a(href="./peserta/" + peserta.NIM + "/") Edit
