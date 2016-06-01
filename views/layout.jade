@@ -3,12 +3,16 @@ html
   head
     title= title
     meta(charset="utf-8")
+    block stylesheet
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
     link(rel="stylesheet",href="/bower_components/jquery-ui/themes/smoothness/jquery-ui.css")
+    block script
     script(src='/bower_components/jquery/dist/jquery.min.js')
-    script(src='/bower_components/jquery-ui/jquery-ui.min.js')
     script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
-    script(src='/bower_components/angular/dist/js/bootstrap.min.js')
   body
-    block content
+    .container
+      .col-xs-4
+        img.logo(src="/assets/Copy of SPARTA 2015.jpg")
+      .col-xs-6
+        block content
