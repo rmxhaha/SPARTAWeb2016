@@ -1,19 +1,18 @@
 extends layout
 
 block content
-  div(class="container")
-    h2
-      a(href="../days/") back
-    h1= dayid
-    h2= dayname
-    table.table
-      tr
-        td NIM
-        td kehadiran
-      each p in attendance
-       tr
-         td= p.NIM
-         td= p.hadir
-         td
-           a(href="./toggle/?nim="+p.NIM+"&id="+dayid) toggle
+  h2
+    a(href="../days/") back
+  h1= dayid
+  h2= dayname
+  table.table
+    tr
+      td NIM
+      td kehadiran
+    each p in attendance
+     tr
+       td= p.NIM
+       td= p.hadir
+       td
+         a(href="./toggle/?nim="+p.NIM+"&id="+dayid) toggle
 
