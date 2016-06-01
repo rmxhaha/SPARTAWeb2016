@@ -13,9 +13,11 @@ block content
         td= task.selesai
   table.table
     tr
+      td Tanggal
       td Day
       td Kehadiran
     each day in days
       tr
+        td= day.date
         td= day.name
         td= day.attendance

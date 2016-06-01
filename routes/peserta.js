@@ -90,20 +90,26 @@ router.get('/profile/', checkAuth, function(req,res,next){
     return Promise.join( 
       conn.query("SELECT NIM, fullname FROM peserta WHERE NIM=?", [req.session.user_data.NIM] ), 
       conn.query("SELECT tugas.nama_tugas, (SELECT COUNT(*) FROM penilaian WHERE NIM=? AND penilaian.id=tugas.id) as selesai FROM tugas", 
-                  [req.session.user_data.NIM]) 
+                  [req.session.user_data.NIM]),
+      conn.query("SELECT day.name as name, day.date as date, (SELECT COUNT(*) FROM kehadiran WHERE kehadiran.NIM=? AND kehadiran.day_id = day.id) as attendance FROM day ORDER BY day.date DESC;",
+                  [req.session.user_data.NIM])
     );
   })
   .then(function(results){
      var userdata = results[0];
      var scoredata = results[1];
+     var attendancedata = results[2];
      var data = {};
+     
+     attendancedata = attendancedata.map(function(r){
+      r.date = r.date.getDate() + "-" + r.date.getMonth() + "-" + r.date.getFullYear();
+      return r;
+     });
 
      data.fullname = userdata[0].fullname;
      data.NIM = userdata[0].NIM;
      data.tasks = scoredata;
-     data.days = [
-      { name : "Day #1", attendance : 1 }
-     ];
+     data.days = attendancedata;
      
      res.render('profile', data );
   });
