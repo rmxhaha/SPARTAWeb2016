@@ -79,7 +79,7 @@ block content
         option(value="AB") AB
     .form-group
       label(for="mbti") MBTI Test Result
-      input.form-control(name="mbti",placeholder="ex. ENFJ",required)
+      input.form-control(name="mbti",placeholder="ex. ENFJ",required,minlength=4,maxlength=4)
     .form-group
       label(for="outsideactivity",required) Keaktifan di luar HMIF 
       textarea.form-control(name="outsideactivity",value="-")
