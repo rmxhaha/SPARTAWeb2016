@@ -8,7 +8,7 @@ var crypto = require('crypto');
 function checkAuth(req, res, next) {
   if (!req.session.user_data) {
     console.log( req.session );
-    res.redirect('./login');
+    res.redirect('/login/');
   } else {
     // prevent cache
     res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -75,18 +75,18 @@ router.post('/login/', function(req,res,next){
     {
       // do login session setup
       req.session.user_data = result[0];
-      res.redirect("../profile");
+      res.redirect("../profile/");
     }
     else {
       // reject login
-      res.redirect("../login");
+      res.redirect("../login/");
     }
   });
 });
 
 router.get('/profile/', checkAuth, function(req,res,next){
   console.log( req.session.user_data );
-  
+
   mysql.createConnection(dbconf)
   .then(function(conn){
     return Promise.join( 
@@ -115,6 +115,11 @@ router.get('/profile/', checkAuth, function(req,res,next){
      
      res.render('profile', data );
   });
+});
+
+router.get("/logout/",function(req,res,next){
+  delete req.session.user_data;
+  res.redirect("/");
 });
 
 module.exports = router;
