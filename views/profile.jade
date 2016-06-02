@@ -1,26 +1,36 @@
 extends layout
 
 block content
-  a(href="/logout") logout
-  h1= fullname
-  h3= NIM
-  .profile_picture_container
-    img.profile_picture(src="/profile_picture/")
-  table.table
-    tr
-      td Tugas
-      td Selesai
-    each task in tasks
+  .container-fluid
+    .col-md-6
+      a.profile-button(href="/upload_profile_picture/") UPLOAD PP
+    .col-md-6
+      a.profile-button(href="/logout/") LOGOUT
+  .container-fluid
+    .aqua.med-blue PERFORMA INDIVIDUAL
+    .row
+    .col-md-4
+      .profile_picture_container
+        img.profile_picture(src="/profile_picture/")
+    .col-md-8
+      h1= fullname
+      hr
+      h3= NIM
+    table.table
       tr
-        td= task.nama_tugas
-        td= task.selesai
-  table.table
-    tr
-      td Tanggal
-      td Day
-      td Kehadiran
-    each day in days
+        td Tugas
+        td Selesai
+      each task in tasks
+        tr
+          td= task.nama_tugas
+          td= task.selesai
+    table.table
       tr
-        td= day.date
-        td= day.name
-        td= day.attendance
+        td Tanggal
+        td Day
+        td Kehadiran
+      each day in days
+        tr
+          td= day.date
+          td= day.name
+          td= day.attendance

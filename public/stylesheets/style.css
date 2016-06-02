@@ -18,13 +18,18 @@
   font-size : 4em;
   font-style : italic;
 }
+.med-blue {
+  color : #213467;
+  font-size : 2em;
+  font-style : italic;
+}
 .big-orange {
   color : #FDB930;
   padding-top : 0.5em;
   font-size : 2em;
   font-style : italic;
 }
-.login-button {
+.login-button{
   background-color : #213467;
   color : white;
   font-family : Aqua;
@@ -32,6 +37,20 @@
   font-size : 2em;
   height : 1.8em;
 }
+.profile-button {
+  display : block;
+  background-color : #213467;
+  color : white;
+  font-family : Aqua;
+  font-style : italic;
+  font-size : 1em;
+  padding : 10px;
+  -moz-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  text-align : center;
+}
+
 .main {
   -webkit-border-radius: 10px 10px 0px 0px;
   -moz-border-radius: 10px 10px 0px 0px;
