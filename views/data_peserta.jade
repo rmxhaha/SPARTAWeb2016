@@ -2,8 +2,10 @@ extends layout
 
 block content
   a(href="../../list_peserta/") Back
+  img(src=data_peserta.profilepicture,width=300)
   table.table
     each val,index in data_peserta
-      tr
-        td= index
-        td= val
+      -if(index!="profilepicture")
+        tr
+          td= index
+          td= val
