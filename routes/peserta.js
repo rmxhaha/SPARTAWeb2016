@@ -125,7 +125,7 @@ router.get("/profile_picture/",checkAuth, function(req,res,next){
   if( req.session.user_data.profilepicture )
     res.sendFile(path.resolve( __dirname + "/." + req.session.user_data.profilepicture));
   else
-    res.sendFile(path.resolve(__dirname + "/../public/assets/default.jpg"));
+    res.sendFile(path.resolve(__dirname + "/../public/assets/Copy of SPARTA 2015.jpg"));
 });
 
 router.get("/logout/",function(req,res,next){
