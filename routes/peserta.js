@@ -4,7 +4,7 @@ var Promise = require('bluebird');
 var dbconf = require('../conf/db');
 var mysql = require('promise-mysql');
 var crypto = require('crypto');
-var fs = Promise.promisifyAll(require("fs"));
+var fs = require("fs");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
@@ -133,15 +133,14 @@ router.post("/upload_profile_picture/", checkAuth, multipartMiddleware, function
   var npath = "./uploaded/pp_" + req.session.user_data.NIM + ".jpg"; // assume jpg
   var db = mysql.createConnection(dbconf);
   
-  fs.rename( req.files.profilepicture.path, npath)
-    .then(function(){
-      return db.then(function(conn){
-        return conn.query("UPDATE peserta SET profilepicture = ? WHERE NIM = ?", [npath, req.session.user_data.NIM]);
-      });
+  fs.rename( req.files.profilepicture.path, npath,function(){
+    db.then(function(conn){
+      return conn.query("UPDATE peserta SET profilepicture = ? WHERE NIM = ?", [npath, req.session.user_data.NIM]);
     })
     .then(function(results){
       res.redirect("/profile/");
     });
+  });
 })
 
 module.exports = router;
