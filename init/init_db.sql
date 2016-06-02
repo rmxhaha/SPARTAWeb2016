@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2016 at 02:22 PM
+-- Generation Time: Jun 02, 2016 at 12:48 PM
 -- Server version: 5.6.16
 -- PHP Version: 5.5.11
 
@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `peserta` (
   `password` varchar(100) NOT NULL,
   `fullname` varchar(200) NOT NULL,
   `shortname` varchar(20) NOT NULL,
+  `profilepicture` varchar(300) DEFAULT NULL,
   `department` enum('if','sti') NOT NULL,
   `placeborn` varchar(100) NOT NULL,
   `dateborn` date NOT NULL,
@@ -112,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `peserta` (
   `email` varchar(200) NOT NULL,
   `handphone1` bigint(20) NOT NULL,
   `handphone2` bigint(20) DEFAULT NULL,
-  `guardianname` varchar(20) NOT NULL,
+  `guardianname` varchar(200) NOT NULL,
   `guardianphone` bigint(20) NOT NULL,
   `religion` enum('buddha','kristen','katolik','islam','hindu','others') NOT NULL,
   `illness` varchar(200) NOT NULL DEFAULT '-',
@@ -126,12 +127,13 @@ CREATE TABLE IF NOT EXISTS `peserta` (
 -- Dumping data for table `peserta`
 --
 
-INSERT INTO `peserta` (`NIM`, `password`, `fullname`, `shortname`, `department`, `placeborn`, `dateborn`, `LINEID`, `origin`, `originaddress`, `bandungaddress`, `email`, `handphone1`, `handphone2`, `guardianname`, `guardianphone`, `religion`, `illness`, `bloodtype`, `mbti`, `outsideactivity`) VALUES
-('13514000', '2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3', 'rmxhaha', 'rmxhaha', 'if', 'Jakarta', '1998-06-01', 'rmx', 'a', 'aa', 'aa', 'a@a.c', 99999999, 0, 'rmxhehe', 8888888888888, 'islam', '-', '0', 'ENFJ', ''),
-('13514001', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'a', 'a', 'sti', 'a', '1998-06-09', 'a', 'a', 'a', 'a', 'a@a.a', 888888, NULL, 'aaa', 8888888888888, 'islam', '-', '0', 'ENFJ', ''),
-('13514002', 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b', 'asdf', 'asdf', 'if', 'asdf', '1998-06-02', 'rmx', 'asdf', 'asdf', 'asdf', 'c@c.c', 123123123123, NULL, 'asdf', 8888888888888, 'islam', '-', '0', 'ENFJ', ''),
-('13514090', 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b', 'Candra Ramsi', 'Candra', 'if', 'Jakarta', '1996-06-26', 'rmxhaha', 'Jakarta', 'Jl. Janur Asri 4 QK 9 no 8', 'Jl. ciumbeleuit no 83', 'candra_ramsi@arc.itb.ac.id', 87880987539, NULL, 'Hery Gunawan', 818959388, 'buddha', '-', 'A', 'ENJF', 'Internship'),
-('13514999', 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b', 'Anonymous', 'Anonymous', 'if', 'Jakarta', '0000-00-00', 'anony', 'ano', 'an', 'anony', 'an@an.c', 888888888888888, 0, 'Anonyy', 888888888888888, 'kristen', '-', '0', 'ENFJ', 'asdf');
+INSERT INTO `peserta` (`NIM`, `password`, `fullname`, `shortname`, `profilepicture`, `department`, `placeborn`, `dateborn`, `LINEID`, `origin`, `originaddress`, `bandungaddress`, `email`, `handphone1`, `handphone2`, `guardianname`, `guardianphone`, `religion`, `illness`, `bloodtype`, `mbti`, `outsideactivity`) VALUES
+('13514000', '2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3', 'rmxhaha', 'rmxhaha', '', 'if', 'Jakarta', '1998-06-01', 'rmx', 'a', 'aa', 'aa', 'a@a.c', 99999999, 0, 'rmxhehe', 8888888888888, 'islam', '-', '0', 'ENFJ', ''),
+('13514001', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'a', 'a', '', 'sti', 'a', '1998-06-09', 'a', 'a', 'a', 'a', 'a@a.a', 888888, NULL, 'aaa', 8888888888888, 'islam', '-', '0', 'ENFJ', ''),
+('13514002', 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b', 'asdf', 'asdf', '', 'if', 'asdf', '1998-06-02', 'rmx', 'asdf', 'asdf', 'asdf', 'c@c.c', 123123123123, NULL, 'asdf', 8888888888888, 'islam', '-', '0', 'ENFJ', ''),
+('13514090', 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b', 'Candra Ramsi', 'Candra', './uploaded/pp_13514090.jpg', 'if', 'Jakarta', '1996-06-26', 'rmxhaha', 'Jakarta', 'Jl. Janur Asri 4 QK 9 no 8', 'Jl. ciumbeleuit no 83', 'candra_ramsi@arc.itb.ac.id', 87880987539, NULL, 'Hery Gunawan', 818959388, 'buddha', '-', 'A', 'ENJF', 'Internship'),
+('13514999', 'f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b', 'Anonymous', 'Anonymous', '', 'if', 'Jakarta', '0000-00-00', 'anony', 'ano', 'an', 'anony', 'an@an.c', 888888888888888, 0, 'Anonyy', 888888888888888, 'kristen', '-', '0', 'ENFJ', 'asdf'),
+('13519111', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'a', 'a', '', 'if', 'a', '1998-06-16', 'a', 'a', 'a\r\n', 'a', 'a@a.a', 123123123123, NULL, 'aa', 8888888888888, 'islam', '-', '0', 'ISFP', '');
 
 -- --------------------------------------------------------
 
