@@ -4,6 +4,9 @@ var Promise = require('bluebird');
 var dbconf = require('../conf/db');
 var mysql = require('promise-mysql');
 var crypto = require('crypto');
+var fs = Promise.promisifyAll(require("fs"));
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 function checkAuth(req, res, next) {
   if (!req.session.user_data) {
@@ -121,5 +124,26 @@ router.get("/logout/",function(req,res,next){
   delete req.session.user_data;
   res.redirect("/");
 });
+
+router.get("/upload_profile_picture/", checkAuth, function(req,res,next){
+  res.render("upload_profile_picture");
+});
+
+router.post("/upload_profile_picture/", checkAuth, multipartMiddleware, function(req,res,next){
+  console.log( req.files );
+  res.redirect("/upload_profile_picture/");
+  var npath = "./uploaded/pp_" + req.session.user_data.NIM + ".jpg"; // assume jpg
+  var db = mysql.createConnection(dbconf);
+  
+  fs.rename( req.files.profilepicture.path, npath)
+    .then(function(){
+      return db.then(function(conn){
+        return conn.query("UPDATE peserta SET profilepicture = ? WHERE NIM = ?", [npath, req.session.user_data.NIM]);
+      })
+    })
+    .then(function(results){
+      res.redirect("/profile/");
+    });
+})
 
 module.exports = router;

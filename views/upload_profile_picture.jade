@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1 Upload Your Profile Picture
+  form(action="",method="POST",enctype="multipart/form-data")
+    .form-group
+      label(for="profilepicture") Profile Picture
+      input(type="file", name="profilepicture")    
+    .form-group
+      input(type="submit",value="upload") 
