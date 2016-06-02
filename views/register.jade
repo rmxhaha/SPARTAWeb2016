@@ -16,10 +16,10 @@ block content
       input.form-control(type="password",name="password",required)
     .form-group
       label(for="fullname") Nama lengkap
-      input.form-control(placeholder="",name="fullname",required)
+      input.form-control(placeholder="",name="fullname",required,maxlength=200)
     .form-group
       label(for="shortname") Nama panggilan
-      input.form-control(placeholder="",name="shortname",required)
+      input.form-control(placeholder="",name="shortname",required,maxlength=20)
     .form-group
       label(for="department") Jurusan 
       select.form-control(name="department",required)
@@ -27,25 +27,25 @@ block content
         option(value="if") IF
     .form-group
       label(for="placeborn") Tempat Lahir
-      input.form-control(name="placeborn",required)
+      input.form-control(name="placeborn",required,maxlength=100)
     .form-group  
       label(for="dateborn") Tanggal lahir 
       input.form-control#dateborn(name="dateborn",placeholder="YYYY-MM-DD",pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])",required)
     .form-group
       label(for="LINEID") ID Line
-      input.form-control(name="LINEID",required)
+      input.form-control(name="LINEID",required,maxlength=50)
     .form-group
       label(for="origin") Asal Daerah
-      input.form-control(name="origin",required)
+      input.form-control(name="origin",required,maxlength=50)
     .form-group
       label(for="originaddress") Alamat Asal
-      textarea.form-control(name="originaddress",required)
+      textarea.form-control(name="originaddress",required,maxlength=200)
     .form-group
       label(for="bandungaddress") Alamat di Bandung
-      input.form-control(name="bandungaddress",required)
+      input.form-control(name="bandungaddress",required,maxlength=200)
     .form-group
       label(for="email") Alamat Email
-      input.form-control(name="email",type="email",required)
+      input.form-control(name="email",type="email",required,maxlength=200)
     .form-group 
       label(for="handphone1") Nomor HP 1
       input.form-control(name="handphone1",pattern="^[0-9]{6,15}$",required)
@@ -53,7 +53,7 @@ block content
       label(for="handphone2") Nomor HP 2
       input.form-control(name="handphone2",pattern="^[0-9]{6,15}$", placeholder="-")
     .form-group
-      label(for="guardianname") Nama Ortu/wali
+      label(for="guardianname",maxlength=200) Nama Ortu/wali
       input.form-control(name="guardianname",required)
     .form-group
       label(for="guardianphone") No Telp Ortu/wali
@@ -69,7 +69,7 @@ block content
         option(value="others") Lain-lain
     .form-group
       label(for="illness") Penyakit
-      textarea.form-control(name="illness",required) -
+      textarea.form-control(name="illness",required,maxlength=200) -
     .form-group
       label(for="bloodtype") Golongan darah
       select.form-control(name="bloodtype")
@@ -82,6 +82,6 @@ block content
       input.form-control(name="mbti",placeholder="ex. ENFJ",required,minlength=4,maxlength=4)
     .form-group
       label(for="outsideactivity",required) Keaktifan di luar HMIF 
-      textarea.form-control(name="outsideactivity",value="-")
+      textarea.form-control(name="outsideactivity",maxlength=500) -
       .alert.alert-info cth: unit atau kegiatan di luar kampus
     input.form-control(type="submit")
