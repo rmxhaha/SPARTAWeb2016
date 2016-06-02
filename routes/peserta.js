@@ -130,8 +130,6 @@ router.get("/upload_profile_picture/", checkAuth, function(req,res,next){
 });
 
 router.post("/upload_profile_picture/", checkAuth, multipartMiddleware, function(req,res,next){
-  console.log( req.files );
-  res.redirect("/upload_profile_picture/");
   var npath = "./uploaded/pp_" + req.session.user_data.NIM + ".jpg"; // assume jpg
   var db = mysql.createConnection(dbconf);
   
@@ -139,7 +137,7 @@ router.post("/upload_profile_picture/", checkAuth, multipartMiddleware, function
     .then(function(){
       return db.then(function(conn){
         return conn.query("UPDATE peserta SET profilepicture = ? WHERE NIM = ?", [npath, req.session.user_data.NIM]);
-      })
+      });
     })
     .then(function(results){
       res.redirect("/profile/");
