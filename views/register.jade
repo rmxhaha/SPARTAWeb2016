@@ -23,8 +23,8 @@ block content
     .form-group
       label(for="department") Jurusan 
       select.form-control(name="department",required)
-        option(value="sti") STI
         option(value="if") IF
+        option(value="sti") STI
     .form-group
       label(for="placeborn") Tempat Lahir
       input.form-control(name="placeborn",required,maxlength=100)
@@ -61,10 +61,10 @@ block content
     .form-group
       label(for="religion") Agama
       select.form-control(name="religion")
+        option(value="islam",selected) Islam
         option(value="buddha") Buddha
         option(value="kristen") Kristen
         option(value="katolik") Katolik
-        option(value="islam",selected) Islam
         option(value="hindu") Hindu
         option(value="others") Lain-lain
     .form-group
@@ -79,7 +79,23 @@ block content
         option(value="AB") AB
     .form-group
       label(for="mbti") MBTI Test Result
-      input.form-control(name="mbti",placeholder="ex. ENFJ",required,minlength=4,maxlength=4)
+      select.form-control(name="mbti",required)
+        option(value="ISTJ") ISTJ
+        option(value="ISFJ") ISFJ
+        option(value="INTJ") INTJ
+        option(value="INFJ") INFJ
+        option(value="ISTP") ISTP
+        option(value="ISFP") ISFP
+        option(value="INTP") INTP
+        option(value="INFP") INFP
+        option(value="ESTJ") ESTJ
+        option(value="ESFJ") ESFJ
+        option(value="ENTJ") ENTJ
+        option(value="ENFJ") ENFJ
+        option(value="ESTP") ESTP
+        option(value="ESFP") ESFP
+        option(value="ENTP") ENTP
+        option(value="ENFP") ENFP
     .form-group
       label(for="outsideactivity",required) Keaktifan di luar HMIF 
       textarea.form-control(name="outsideactivity",maxlength=500) -
