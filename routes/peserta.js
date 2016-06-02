@@ -120,6 +120,10 @@ router.get('/profile/', checkAuth, function(req,res,next){
   });
 });
 
+router.get("/profile_picture/",checkAuth, function(req,res,next){
+  res.sendFile(req.session.user_data.profilepicture);
+});
+
 router.get("/logout/",function(req,res,next){
   delete req.session.user_data;
   res.redirect("/");
@@ -138,6 +142,7 @@ router.post("/upload_profile_picture/", checkAuth, multipartMiddleware, function
       return conn.query("UPDATE peserta SET profilepicture = ? WHERE NIM = ?", [npath, req.session.user_data.NIM]);
     })
     .then(function(results){
+      req.session.user_data.profilepicture = npath;
       res.redirect("/profile/");
     });
   });
