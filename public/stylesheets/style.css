@@ -8,29 +8,35 @@
   width : 80%;
   margin : 0 auto;
   display : block;
-  margin-top : 100px;
 }
 
 .aqua {
   font-family : Aqua;
 }
-.bigblue {
-  color : blue;
+.big-blue {
+  color : #213467;
   font-size : 4em;
   font-style : italic;
 }
-.bigorange {
+.big-orange {
   color : #FDB930;
   padding-top : 0.5em;
   font-size : 2em;
   font-style : italic;
+}
+.login-button {
+  background-color : #213467;
+  color : white;
+  font-family : Aqua;
+  font-style : italic;
+  font-size : 2em;
+  height : 1.8em;
 }
 .main {
   -webkit-border-radius: 10px 10px 0px 0px;
   -moz-border-radius: 10px 10px 0px 0px;
   border-radius: 10px 10px 0px 0px;
   background-color : #FFFFFF;
-  margin-top : 100px;
   padding-top : 60px; 
   min-height : 100vh;
   padding-bottom : 100px;
@@ -38,4 +44,14 @@
 
 body {
   background-color : #FDB930
+}
+
+@media (min-width: 992px) {
+  .main {
+    margin-top : 100px;
+  }
+  .logo {
+    margin-top : 100px;
+
+  }
 }

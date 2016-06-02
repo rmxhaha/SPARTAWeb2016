@@ -4,13 +4,13 @@ block content
   .col-xs-2
   .col-xs-8
     form(action="",method="POST")
-      center.aqua.bigblue LOG IN
-      center.aqua.bigorange NIM
+      center.aqua.big-blue LOGIN
+      center.aqua.big-orange NIM
       input.form-control(placeholder="NIM", name="nim",maxlength=8)
-      center.aqua.bigorange PASSWORD
+      center.aqua.big-orange PASSWORD
       input.form-control(placeholder="password", type="password", name="password")
       br
-      input.form-control(type="submit",value="Login")
+      input.form-control.login-button(type="submit",value="LOGIN")
       
       span Not yet registered ? 
       a(href="/register/") Click here
