@@ -13,6 +13,11 @@ router.get("/:nim", function(req,res,next){
   .then(function(result){
     if( result.length == 0 )
       throw new Error("peserta not found");
+
+    delete result[0]["password"];
+    var val = result[0]["dateborn"];
+    result[0]["dateborn"] = val.getDate() + "-" + val.getMonth() + "-" + val.getFullYear();;
+  
     res.render("data_peserta", {data_peserta : result[0] });
   })
   .catch(function(err){
