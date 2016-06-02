@@ -5,6 +5,7 @@ var dbconf = require('../conf/db');
 var mysql = require('promise-mysql');
 var crypto = require('crypto');
 var fs = require("fs");
+var path = require("path");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
@@ -121,7 +122,7 @@ router.get('/profile/', checkAuth, function(req,res,next){
 });
 
 router.get("/profile_picture/",checkAuth, function(req,res,next){
-  res.sendFile(req.session.user_data.profilepicture);
+  res.sendFile(path.resolve( __dirname + "/." + req.session.user_data.profilepicture));
 });
 
 router.get("/logout/",function(req,res,next){
