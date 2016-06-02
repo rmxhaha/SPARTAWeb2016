@@ -31,5 +31,9 @@ router.use('/attendance',checkAdminAuth,  attendance );
 router.get('/',checkAdminAuth,  function(req,res,next){
   res.render("admin"); 
 });
+router.get('/logout/',checkAdminAuth,  function(req,res,next){
+  req.session.admin_access = false;
+  res.redirect("/");
+});
 
 module.exports = router;
