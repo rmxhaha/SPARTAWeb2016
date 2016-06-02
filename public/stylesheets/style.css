@@ -45,7 +45,12 @@
 body {
   background-color : #FDB930
 }
-
+.profile_picture {
+  width : 100%;
+}
+.profile_picture_container {
+  max-width : 200px;
+}
 @media (min-width: 992px) {
   .main {
     margin-top : 100px;
