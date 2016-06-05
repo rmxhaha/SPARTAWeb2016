@@ -1,9 +1,5 @@
 var express = require("express");
 var router = express.Router();
-var dbconf = require('../conf/db');
-
-var mysql = require('promise-mysql');
-var Promise = require('bluebird');
 
 var list_peserta = require('./list_peserta');
 var data_peserta = require('./data_peserta');

@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var dbconf = require('../conf/db');
+var dbpool = require('../conf/dbpool');
 var fs = require("fs");
 var path = require("path");
 
@@ -10,7 +10,7 @@ var Promise = require('bluebird');
 
 router.get("/profile_picture/:nim/", function(req,res,next){
   var local =  __dirname + "/.";
-  var c = mysql.createConnection(dbconf);
+  var c = dbpool.getConnection();
   c.then(function(conn){
     return conn.query("SELECT profilepicture FROM peserta WHERE NIM=?",[req.params.nim]);
   })
@@ -21,11 +21,14 @@ router.get("/profile_picture/:nim/", function(req,res,next){
       res.sendFile(path.resolve(local + rows[0].profilepicture ));
     else
       res.sendFile(path.resolve(__dirname + "/../public/assets/default2.jpg"));
+  })
+  .finally(function(){
+    c.then(function(conn){ dbpool.releaseConnection(conn); });
   });
 });
 
 router.get("/:nim", function(req,res,next){
-  var c = mysql.createConnection(dbconf);
+  var c = dbpool.getConnection();
   c.then(function(conn){
     return conn.query("SELECT * FROM peserta WHERE NIM=?;",[req.params.nim]);
   })
@@ -47,6 +50,9 @@ router.get("/:nim", function(req,res,next){
   .catch(function(err){
     console.log(err);
     res.render("error",err);
+  })
+  .finally(function(){
+    c.then(function(conn){ dbpool.releaseConnection(conn); });
   });
   
 });

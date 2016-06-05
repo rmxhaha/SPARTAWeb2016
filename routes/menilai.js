@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var dbconf = require('../conf/db');
+var dbpool = require('../conf/dbpool');
 var mysql = require('promise-mysql');
 var Promise = require('bluebird');
 
@@ -13,7 +13,7 @@ router.get('/toggle/', function(req,res,next){
    if( !nim || nim.length != 8 || !tugasid || tugasid.length > 5 )
      return res.redirect("/");
    
-   var c = mysql.createConnection(dbconf)
+   var c = dbpool.getConnection();
    c.then( function(conn){
       return conn.query("DELETE FROM penilaian WHERE NIM=? AND id=?",[nim,tugasid]);
    })
@@ -23,14 +23,16 @@ router.get('/toggle/', function(req,res,next){
       return c.then( function(conn){ conn.query("INSERT INTO penilaian (`NIM`,`id`) VALUES (?,?)", [nim,tugasid]) });
    })
    .finally(function(){
+      c.then(function(conn){ dbpool.releaseConnection(conn); });
       res.redirect(backURL);
    });
 });
 
 router.get('/:nim', function(req, res, next) {
 
-  mysql.createConnection(dbconf)
-  .then(function(conn){
+  var c = dbpool.getConnection();
+  
+  c.then(function(conn){
      var getUserQuery = "SELECT NIM, fullname FROM peserta WHERE NIM=" + req.params.nim;
      var getScoreQuery = "SELECT tugas.id, tugas.nama_tugas, (SELECT COUNT(*) FROM penilaian WHERE NIM="+req.params.nim+" AND penilaian.id=tugas.id) as selesai FROM tugas";
      console.log( getUserQuery );
@@ -46,6 +48,9 @@ router.get('/:nim', function(req, res, next) {
      data.penilaian = scoredata.map(function(s){ return [s.nama_tugas, s.selesai, s.id] });
      console.log( data );
      res.render('menilai', data );
+  })
+  .finally(function(){
+    c.then(function(conn){ dbpool.releaseConnection(conn); });
   });
 });
 

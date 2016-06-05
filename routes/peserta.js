@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Promise = require('bluebird');
-var dbconf = require('../conf/db');
+var dbpool = require('../conf/dbpool');
 var mysql = require('promise-mysql');
 var crypto = require('crypto');
 var fs = require("fs");
@@ -43,13 +43,15 @@ router.post('/register/', function(req,res,next){
   if( req.body.handphone2 == "" ) req.body.handphone2 = null;
   if( req.body.outsideactivity = "" ) req.body.outsideactivity = "-";
   
-  mysql.createConnection(dbconf)
-  .then(function(conn){
+  var c = dbpool.getConnection();
+  
+  c.then(function(conn){
     return conn.query("INSERT INTO peserta SET ?", req.body);
   })
   .finally(function(){
+    c.then(function(conn){ dbpool.releaseConnection(conn); });
     res.redirect('../login');
-  })
+  });
 });
 
 /* GET users listing. */
@@ -70,8 +72,11 @@ router.post('/login/', function(req,res,next){
     return res.redirect("/admin/");
   }
   
-  mysql.createConnection(dbconf)
-  .then( function(conn){
+  var c = dbpool.getConnection();
+  
+  c.then( function(conn){
+    console.log( conn );
+
     return conn.query("SELECT * FROM peserta WHERE nim=? AND password=?", [nim,hpass]);
   })
   .then(function(result){
@@ -85,14 +90,18 @@ router.post('/login/', function(req,res,next){
       // reject login
       res.redirect("../login/");
     }
+  })
+  .finally(function(){
+    c.then(function(conn){ dbpool.releaseConnection(conn); });
   });
 });
 
 router.get('/profile/', checkAuth, function(req,res,next){
   console.log( req.session.user_data );
 
-  mysql.createConnection(dbconf)
-  .then(function(conn){
+  var c = dbpool.getConnection();
+  
+  c.then(function(conn){
     return Promise.join( 
       conn.query("SELECT NIM, fullname FROM peserta WHERE NIM=?", [req.session.user_data.NIM] ), 
       conn.query("SELECT tugas.nama_tugas, (SELECT COUNT(*) FROM penilaian WHERE NIM=? AND penilaian.id=tugas.id) as selesai FROM tugas", 
@@ -118,6 +127,9 @@ router.get('/profile/', checkAuth, function(req,res,next){
      data.days = attendancedata;
      
      res.render('profile', data );
+  })
+  .finally(function(){
+    c.then(function(conn){ dbpool.releaseConnection(conn); });
   });
 });
 
@@ -139,7 +151,7 @@ router.get("/upload_profile_picture/", checkAuth, function(req,res,next){
 
 router.post("/upload_profile_picture/", checkAuth, multipartMiddleware, function(req,res,next){
   var npath = "./uploaded/pp_" + req.session.user_data.NIM + ".jpg"; // assume jpg
-  var db = mysql.createConnection(dbconf);
+  var db = dbpool.getConnection();
   
   fs.rename( req.files.profilepicture.path, npath,function(){
     db.then(function(conn){
@@ -148,8 +160,11 @@ router.post("/upload_profile_picture/", checkAuth, multipartMiddleware, function
     .then(function(results){
       req.session.user_data.profilepicture = npath;
       res.redirect("/profile/");
+    })
+    .finally(function(){
+      db.then(function(conn){ dbpool.releaseConnection(conn); });
     });
-  });
+  })
 })
 
 module.exports = router;
