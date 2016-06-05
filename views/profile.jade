@@ -3,34 +3,54 @@ extends layout
 block content
   .container-fluid
     .col-md-6
-      a.profile-button(href="/upload_profile_picture/") UPLOAD PP
+      a.profile-button(href="/upload_profile_picture/") UPLOAD PROFILE PICTURE
     .col-md-6
       a.profile-button(href="/logout/") LOGOUT
+  br
+  .aqua.med-blue PERFORMA INDIVIDUAL
+
+block profile
+  .container-fluid.profile-orange
+    .col-md-1
+    .col-md-10
+      .col-md-4
+        .profile_picture_container
+          img.profile_picture(src="/profile_picture/")
+      .col-md-8
+        h1.aqua-italic= fullname
+        hr.profile-hr
+        h3.aqua-italic= NIM
+
+block tugas
   .container-fluid
-    .aqua.med-blue PERFORMA INDIVIDUAL
-    .row
-    .col-md-4
-      .profile_picture_container
-        img.profile_picture(src="/profile_picture/")
-    .col-md-8
-      h1= fullname
-      hr
-      h3= NIM
-    table.table
-      tr
-        td Tugas
-        td Selesai
-      each task in tasks
+    .col-md-1
+    .col-md-10
+      h1.med-blue.aqua TUGAS
+      table.table.table-bordered
         tr
-          td= task.nama_tugas
-          td= task.selesai
-    table.table
-      tr
-        td Tanggal
-        td Day
-        td Kehadiran
-      each day in days
+          th Nama Tugas
+        each task in tasks
+          tr
+            if(task.selesai)
+              td.success= task.nama_tugas
+            else
+              td.danger= task.nama_tugas
+
+block kehadiran
+  .container-fluid
+    .col-md-1
+    .col-md-10
+      h1.med-blue.aqua KEHADIRAN
+      table.table-bordered.table
         tr
-          td= day.date
-          td= day.name
-          td= day.attendance
+          th Tanggal
+          th Nama Day
+        each day in days
+          if(day.attendance)
+            tr.success
+              td= day.date
+              td= day.name
+          else
+            tr.danger
+              td= day.date
+              td= day.name
