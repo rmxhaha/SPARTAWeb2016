@@ -117,7 +117,7 @@ router.get('/profile/', checkAuth, function(req,res,next){
      var data = {};
      
      attendancedata = attendancedata.map(function(r){
-      if( r instanceof Date )
+      if( r.date instanceof Date )
         r.date = r.date.getDate() + "-" + r.date.getMonth() + "-" + r.date.getFullYear();
       return r;
      });
