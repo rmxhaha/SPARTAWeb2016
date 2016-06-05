@@ -13,6 +13,8 @@ block content
         td= peserta.fullname
         td= peserta.score
         td
-          a(href="../menilai/" + peserta.NIM + "/") Edit
-          span 
+          a(href="../menilai/" + peserta.NIM + "/") Edit Nilai 
+          br
           a(href="../data/" + peserta.NIM + "/") Lihat Data
+          br
+          a(href="./delete/?nim=" + peserta.NIM ) Delete Peserta

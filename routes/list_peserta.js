@@ -18,4 +18,16 @@ router.get('/', function(req,res,next){
     c.then(function(conn){ dbpool.releaseConnection(conn); });
   });
 });
+router.get('/delete/',function(req,res,next){
+  var c = dbpool.getConnection();
+  var backURL = req.header("Referer");
+
+  c.then(function(conn){
+    return conn.query("DELETE FROM peserta WHERE NIM=?",[req.query.nim]);
+  })
+  .finally(function(){
+    c.then(function(conn){ dbpool.releaseConnection(conn); });
+    res.redirect(backURL);
+  });
+});
 module.exports = router;
