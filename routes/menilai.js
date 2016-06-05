@@ -33,11 +33,10 @@ router.get('/:nim', function(req, res, next) {
   var c = dbpool.getConnection();
   
   c.then(function(conn){
-     var getUserQuery = "SELECT NIM, fullname FROM peserta WHERE NIM=" + req.params.nim;
-     var getScoreQuery = "SELECT tugas.id, tugas.nama_tugas, (SELECT COUNT(*) FROM penilaian WHERE NIM="+req.params.nim+" AND penilaian.id=tugas.id) as selesai FROM tugas";
-     console.log( getUserQuery );
-     console.log( getScoreQuery );
-     return Promise.join( conn.query(getUserQuery), conn.query(getScoreQuery) )
+     return Promise.join( 
+      conn.query("SELECT NIM, fullname FROM peserta WHERE NIM=?",[req.params.nim]), 
+      conn.query("SELECT tugas.id, tugas.nama_tugas, (SELECT COUNT(*) FROM penilaian WHERE NIM=? AND penilaian.id=tugas.id) as selesai FROM tugas",[req.params.nim])
+    );
   })
   .then(function(results){
      var userdata = results[0];
