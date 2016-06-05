@@ -1,5 +1,7 @@
 extends layout
 
+block script
+  script(src="/javascripts/attendance/toggle.js")
 block content
   h2
     a(href="../days/") back
@@ -12,7 +14,7 @@ block content
     each p in attendance
      tr
        td= p.NIM
-       td= p.hadir
+       td.hadir(nim=p.NIM)= p.hadir
        td
-         a(href="./toggle/?nim="+p.NIM+"&id="+dayid) toggle
+         a.toggle(dayid=dayid, nim=p.NIM) toggle
 

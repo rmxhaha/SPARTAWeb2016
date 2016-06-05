@@ -19,7 +19,7 @@ router.get('/toggle/', function(req, res, next) {
   })
   .then(function(result){
     if( result.affectedRows != 0 )
-      return res.redirect(backURL);
+      return res.json({ state : 0 }); // item deleted
 
     return c.then(function(conn){ 
       return conn.query("INSERT INTO kehadiran (`NIM`,`day_id`) VALUES (?,?)",[nim,dayid]); 
@@ -27,8 +27,8 @@ router.get('/toggle/', function(req, res, next) {
   })
   .finally(function(){
     c.then(function(conn){ dbpool.releaseConnection(conn); });
-    res.redirect(backURL);
-  })
+    res.json({ state : 1 }) // item inserted
+  });
   
 });
 
@@ -54,9 +54,9 @@ router.get('/', function(req, res, next) {
     var dayname = result[1][0].name;
 
     res.render("attendance", {
-    dayname : dayname,
-    dayid : req.query.id,
-    attendance : rows 
+      dayname : dayname,
+      dayid : req.query.id,
+      attendance : rows 
     });
   })
   .catch(function(err){
