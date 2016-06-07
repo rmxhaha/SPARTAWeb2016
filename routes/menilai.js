@@ -11,7 +11,7 @@ router.get('/toggle/', function(req,res,next){
 
    console.log( nim + " " + tugasid );
    if( !nim || nim.length != 8 || !tugasid || tugasid.length > 5 )
-     return res.redirect("/");
+     return res.json({error : "input not allowed"});
    
    var c = dbpool.getConnection();
    c.then( function(conn){
@@ -19,12 +19,14 @@ router.get('/toggle/', function(req,res,next){
    })
    .then( function(result){
       if( result.affectedRows != 0 )
-        return res.redirect(backURL);
-      return c.then( function(conn){ conn.query("INSERT INTO penilaian (`NIM`,`id`) VALUES (?,?)", [nim,tugasid]) });
+        return res.json({ state : 0 });
+      else{
+        res.json({ state : 1 });
+        return c.then( function(conn){ conn.query("INSERT INTO penilaian (`NIM`,`id`) VALUES (?,?)", [nim,tugasid]) })
+      }
    })
    .finally(function(){
       c.then(function(conn){ dbpool.releaseConnection(conn); });
-      res.redirect(backURL);
    });
 });
 
@@ -44,7 +46,7 @@ router.get('/:nim', function(req, res, next) {
      var data = {};
      data.nama = userdata[0].fullname;
      data.NIM = userdata[0].NIM;
-     data.penilaian = scoredata.map(function(s){ return [s.nama_tugas, s.selesai, s.id] });
+     data.penilaian = scoredata;
      console.log( data );
      res.render('menilai', data );
   })
