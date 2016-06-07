@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Promise = require('bluebird');
 var dbpool = require('../conf/dbpool');
+var userconf = require('../conf/user');
 var mysql = require('promise-mysql');
 var crypto = require('crypto');
 var fs = require("fs");
@@ -67,7 +68,7 @@ router.post('/login/', function(req,res,next){
       .update(password)
       .digest('hex');
   // special case 
-  if( password == "a1b2c3" && nim == "admin" ){
+  if( password == userconf.admin_password && nim == userconf.admin_username ){
     req.session.admin_access = true;
     return res.redirect("/admin/");
   }
