@@ -9,6 +9,7 @@ var fs = require("fs");
 var path = require("path");
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var mv = require('mv');
 
 function checkAuth(req, res, next) {
   if (!req.session.user_data) {
@@ -31,21 +32,21 @@ router.get('/register/', function(req,res,next){
 
 router.post('/register/', function(req,res,next){
   // check data
-  
-  // deal with register 
+
+  // deal with register
 
   // hashing the password
   req.body.password = crypto
       .createHash("sha256","goodluck")
       .update(req.body.password)
       .digest('hex');
-  
+
   console.log( req.body );
   if( req.body.handphone2 == "" ) req.body.handphone2 = null;
   if( req.body.outsideactivity = "" ) req.body.outsideactivity = "-";
-  
+
   var c = dbpool.getConnection();
-  
+
   c.then(function(conn){
     return conn.query("INSERT INTO peserta SET ?", req.body);
   })
@@ -67,14 +68,14 @@ router.post('/login/', function(req,res,next){
       .createHash("sha256","goodluck")
       .update(password)
       .digest('hex');
-  // special case 
+  // special case
   if( password == userconf.admin_password && nim == userconf.admin_username ){
     req.session.admin_access = true;
     return res.redirect("/admin/");
   }
-  
+
   var c = dbpool.getConnection();
-  
+
   c.then( function(conn){
     console.log( conn );
 
@@ -101,11 +102,11 @@ router.get('/profile/', checkAuth, function(req,res,next){
   console.log( req.session.user_data );
 
   var c = dbpool.getConnection();
-  
+
   c.then(function(conn){
-    return Promise.join( 
-      conn.query("SELECT NIM, fullname FROM peserta WHERE NIM=?", [req.session.user_data.NIM] ), 
-      conn.query("SELECT tugas.nama_tugas, (SELECT COUNT(*) FROM penilaian WHERE NIM=? AND penilaian.id=tugas.id) as selesai FROM tugas", 
+    return Promise.join(
+      conn.query("SELECT NIM, fullname FROM peserta WHERE NIM=?", [req.session.user_data.NIM] ),
+      conn.query("SELECT tugas.nama_tugas, (SELECT COUNT(*) FROM penilaian WHERE NIM=? AND penilaian.id=tugas.id) as selesai FROM tugas",
                   [req.session.user_data.NIM]),
       conn.query("SELECT day.name as name, day.date as date, (SELECT COUNT(*) FROM kehadiran WHERE kehadiran.NIM=? AND kehadiran.day_id = day.id) as attendance FROM day ORDER BY day.date DESC;",
                   [req.session.user_data.NIM])
@@ -116,7 +117,7 @@ router.get('/profile/', checkAuth, function(req,res,next){
      var scoredata = results[1];
      var attendancedata = results[2];
      var data = {};
-     
+
      attendancedata = attendancedata.map(function(r){
       if( r.date instanceof Date )
         r.date = r.date.getDate() + "-" + r.date.getMonth() + "-" + r.date.getFullYear();
@@ -127,7 +128,7 @@ router.get('/profile/', checkAuth, function(req,res,next){
      data.NIM = userdata[0].NIM;
      data.tasks = scoredata;
      data.days = attendancedata;
-     
+
      res.render('profile', data );
   })
   .finally(function(){
@@ -154,8 +155,8 @@ router.get("/upload_profile_picture/", checkAuth, function(req,res,next){
 router.post("/upload_profile_picture/", checkAuth, multipartMiddleware, function(req,res,next){
   var npath = "./uploaded/pp_" + req.session.user_data.NIM + ".jpg"; // assume jpg
   var db = dbpool.getConnection();
-  
-  fs.rename( req.files.profilepicture.path, npath,function(){
+
+  mv( req.files.profilepicture.path, npath,function(){
     db.then(function(conn){
       return conn.query("UPDATE peserta SET profilepicture = ? WHERE NIM = ?", [npath, req.session.user_data.NIM]);
     })
