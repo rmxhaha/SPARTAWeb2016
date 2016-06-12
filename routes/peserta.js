@@ -43,7 +43,7 @@ router.post('/register/', function(req,res,next){
 
   console.log( req.body );
   if( req.body.handphone2 == "" ) req.body.handphone2 = null;
-  if( req.body.outsideactivity = "" ) req.body.outsideactivity = "-";
+  if( req.body.outsideactivity == "" ) req.body.outsideactivity = "-";
 
   var c = dbpool.getConnection();
 
