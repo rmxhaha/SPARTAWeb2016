@@ -1,0 +1,99 @@
+extends layout
+
+block script
+  script(src='/bower_components/jquery-ui/jquery-ui.min.js')
+  script(src="/javascripts/register/form.js")
+  script(src="/javascripts/register/validation.js")
+
+block content  
+  h1 Form Registrasi
+  form(action="",method="POST")
+    .form-group
+      label(for="fullname") Nama lengkap
+      input.form-control(placeholder="",name="fullname",required,maxlength=200,value=user_data.fullname)
+    .form-group
+      label(for="shortname") Nama panggilan
+      input.form-control(placeholder="",name="shortname",required,maxlength=20,value=user_data.shortname)
+    .form-group
+      label(for="department") Jurusan 
+      select.form-control(name="department",required)
+        - department_list = [['if','IF'],['sti','STI']]
+        for d in department_list
+          if(user_data.department==d[0]) 
+            option(value=d[0],selected)= d[1]
+          else
+            option(value=d[0])= d[1]
+    if(user_data.department)
+    .form-group
+      label(for="placeborn") Tempat Lahir
+      input.form-control(name="placeborn",required,maxlength=100,value=user_data.placeborn)
+    .form-group  
+      label(for="dateborn") Tanggal lahir 
+      input.form-control#dateborn(name="dateborn",placeholder="YYYY-MM-DD",pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])",required,value=user_data.dateborn)
+    .form-group
+      label(for="LINEID") ID Line
+      input.form-control(name="LINEID",required,maxlength=50,value=user_data.LINEID)
+    .form-group
+      label(for="origin") Asal Daerah
+      input.form-control(name="origin",required,maxlength=50,value=user_data.origin)
+    .form-group
+      label(for="originaddress") Alamat Asal
+      textarea.form-control(name="originaddress",required,maxlength=200)= user_data.originaddress
+    .form-group
+      label(for="bandungaddress") Alamat di Bandung
+      input.form-control(name="bandungaddress",required,maxlength=200,value=user_data.bandungaddress)
+    .form-group
+      label(for="email") Alamat Email
+      input.form-control(name="email",type="email",required,maxlength=200,value=user_data.email)
+    .form-group 
+      label(for="handphone1") Nomor HP 1
+      input.form-control(name="handphone1",pattern="^[0-9]{6,15}$",required,placeholder="Nomor HP terdiri dari angka saja e.g. 083322113322",value=user_data.handphone1)
+    .form-group 
+      label(for="handphone2") Nomor HP 2
+      input.form-control(name="handphone2",pattern="^[0-9]{6,15}$", placeholder="-",value=user_data.handphone2)
+    .form-group
+      label(for="guardianname",maxlength=200) Nama Ortu/wali
+      input.form-control(name="guardianname",required,value=user_data.guardianname)
+    .form-group
+      label(for="guardianphone") No Telp Ortu/wali
+      input.form-control(name="guardianphone",pattern="^[0-9]{6,15}$",placeholder="nomor yang bisa dihubungi kalau keadaan darurat",required,value=user_data.guardianphone)
+    .form-group
+      label(for="religion") Agama
+      select.form-control(name="religion")
+        - religion_list = [['islam','Islam'],['buddha','Buddha'],['kristen','Kristen'],['katolik','Katolik'],['hindu','Hindu'],['others','Lain-lain']]
+        for d in religion_list
+          if(user_data.religion==d[0]) 
+            option(value=d[0],selected)= d[1]
+          else
+            option(value=d[0])= d[1]
+    .form-group
+      label(for="illness") Penyakit
+      textarea.form-control(name="illness",required,maxlength=200)= user_data.illness
+    .form-group
+      label(for="bloodtype") Golongan darah
+      select.form-control(name="bloodtype")
+        - bt_list = [['0','O'],['A','A'],['B','B'],['AB','AB']]
+        for d in bt_list
+          if(user_data.bloodtype==d[0]) 
+            option(value=d[0],selected)= d[1]
+          else
+            option(value=d[0])= d[1]
+    .form-group
+      label(for="mbti") MBTI Test Result
+      select.form-control(name="mbti",required)
+        - mbti_list = ['ISTJ','ISFJ','INTJ','INFJ','ISTP','ISFP','INTP','INFP','ESTJ','ESFJ','ENTJ','ENFJ','ESTP','ESFP','ENTP','ENFP']
+        for d in mbti_list
+          if(user_data.mbti==d) 
+            option(value=d,selected)= d
+          else
+            option(value=d)= d
+        
+    .form-group
+      label(for="outsideactivity",required) Keaktifan di luar HMIF 
+      textarea.form-control(name="outsideactivity",maxlength=500)= user_data.outsideactivity
+      .alert.alert-info cth: unit atau kegiatan di luar kampus
+    .alert.alert-warning Correct password is required to edit
+    .form-group
+      label(for="password") Password
+      input.form-control(type="password",name="password",required)
+    input.form-control(type="submit")

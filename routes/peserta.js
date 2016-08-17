@@ -143,6 +143,43 @@ router.get("/profile_picture/",checkAuth, function(req,res,next){
     res.sendFile(path.resolve(__dirname + "/../public/assets/default2.jpg"));
 });
 
+router.get("/edit/", checkAuth, function(req,res,next){
+	res.render("edit", {
+		user_data : req.session.user_data
+	});
+});
+
+router.post("/edit/", checkAuth, function(req,res,next){
+  req.body.password = crypto
+      .createHash("sha256","goodluck")
+      .update(req.body.password)
+      .digest('hex');
+
+  if( req.body.password != req.session.user_data.password )
+    res.redirect('../profile/');
+
+  req.body.NIM = req.session.user_data.NIM;
+
+  console.log( req.body );
+  if( req.body.handphone2 == "" ) req.body.handphone2 = null;
+  if( req.body.outsideactivity == "" ) req.body.outsideactivity = "-";
+
+  var c = dbpool.getConnection();
+
+  c.then(function(conn){
+    var q = conn.query("UPDATE peserta SET ? WHERE nim = ? LIMIT 1;", [req.body,req.body.NIM]);
+	console.log(q.sql);
+    return q;
+  })
+  .finally(function(){
+    c.then(function(conn){ dbpool.releaseConnection(conn); });
+
+	// replace old data
+	req.session.user_data = req.body;
+    res.redirect('../profile/');
+  });
+});
+
 router.get("/logout/",function(req,res,next){
   delete req.session.user_data;
   res.redirect("/");
